@@ -22,12 +22,12 @@
     <el-pagination align="center" :current-page="currentPage" :pager-count="5" :page-sizes="[5, 10, 20, 50]" :page-size="limit" layout="total, prev, pager, next, sizes, jumper" :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     <!-- 添加品牌 -->
     <el-dialog title="添加品牌" :visible.sync="xianshi" width="40%">
-      <el-form>
+      <el-form ref="tmForm" :model="tmForm" :rules="rules">
         <el-form-item label="品牌名称" :label-width="formLabelWidth" prop="tmName">
-          <el-input autocomplete="off" />
+          <el-input v-model="tmForm.tmName" autocomplete="off" />
         </el-form-item>
         <el-form-item label="品牌LOGO" :label-width="formLabelWidth">
-          <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <el-upload class="avatar-uploader" action="/dev-api/admin/product/fileUpload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -36,7 +36,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="xianshi = false">取 消</el-button>
-        <el-button type="primary" @click="xianshi = false">确 定</el-button>
+        <el-button type="primary" @click="addOrUpdateOneTrademark">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { reqGetTrademarkList } from '../../../api/product/trademark'
+import { reqGetTrademarkList, reqSaveOneTrademark, reqGetOneTrademark, reqUpdateOneTrademark, reqDeleteOneTrademark } from '../../../api/product/trademark'
 
 export default {
   name: 'Trademark',
@@ -140,9 +140,9 @@ export default {
       console.log(`当前页: ${val}`)
     },
     // this.getTrademarkList(),
-    mounted() {
-      this.reqGetTrademarkList()
-    },
+    // mounted() {
+    //   this.reqGetTrademarkList()
+    // },
     beforeAvatarUpload(file) {
       const imgArr = ['image/jpeg', 'image/jpg', 'image/png']
       const isJPG = imgArr.includes(file.type)
@@ -160,13 +160,90 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw)
       this.tmForm.logoUrl = res.data // 将上传图片成功后的图片链接地址存到这里面
 
-      this.$refs.tmForm.clearValidate(['logoUrl'])
+      // this.$refs.tmForm.clearValidate(['logoUrl'])
+    },
+    addOrUpdateOneTrademark() {
+      console.log(this.$refs['tmForm'])
+      this.$refs['tmForm'].validate(async valid => {
+        console.log('valid', valid)
+        if (valid) {
+          // alert('submit!')
+          let result
+          // 此时可以根据tmForm中是否有id来判断,当前操作是更新还是添加
+          // 有id是说明是更新 ，反之则是添加新trademark
+          if (this.tmForm.id) {
+            result = await reqUpdateOneTrademark(this.tmForm)
+            // 再加一条 清空this.tmForm
+          } else {
+            result = await reqSaveOneTrademark(this.tmForm)
+          }
+          if (result.code === 200) {
+            this.xianshi = false
+            // 提示一下
+            this.$message.success('操作trademark成功...')
+            // 刷新一下页面
+            // this.currentPage = 1 // 查看第一页的数据
+            this.getTrademarkList()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '操作trademark失败...'
+            })
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    // 3. 删除
+    delOneTrademark(id) {
+      this.$confirm('您真的要删除此条数据吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async() => {
+          const result = await reqDeleteOneTrademark(id)
+          if (result.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            // 判断一下，是不是删除的最后一页的最后一条，如果是的话，则要显示前一页的数据
+            this.currentPage = this.trademarkList.length === 1 ? this.currentPage - 1 : this.currentPage
+            // 刷新当前页面
+            this.getTrademarkList()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '删除失败!'
+            })
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    },
+    // 4. 更新tradrmark之数据回显
+    async editOneTrademark(id) {
+      const result = await reqGetOneTrademark(id)
+      if (result.code === 200) {
+        this.xianshi = true
+        // console.log(result)
+        this.tmForm = result.data
+        // 渲染图片
+        this.imageUrl = result.data.logoUrl
+      }
     },
     addpinpai() {
       this.xianshi = true
       this.tmForm.tmName = ''
       this.imageUrl = ''
-      this.dialogFormVisible = true
+      // this.dialogFormVisible = true
     }
   }
 }

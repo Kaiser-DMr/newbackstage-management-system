@@ -165,10 +165,10 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-image: url('../../img/006CHHsBly1gvmu5lj34fj63y82807wq02.jpg');
-  background-size: cover;
-  height: 600px;
-  overflow: hidden;
+  background-image: url('../../img/WANGJZ.gif');
+  // background-size: cover;
+  // height: 600px;
+  // overflow: hidden;
 
   .login-form {
     position: relative;
