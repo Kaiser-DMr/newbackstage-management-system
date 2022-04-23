@@ -2,13 +2,13 @@
   <div>
     <el-button type="primary" round>添加品牌</el-button>
 
-    <el-table :data="trademarkList" border style="width: 100%; margin: 10px 0">
+    <el-table :data="trademarkList" border style="width: 100%;  margin: 10px 0">
       <el-table-column label="序号" type="index" width="80" align="center" />
       <el-table-column prop="tmName" label="品牌名称" align="center" />
       <el-table-column prop="logoUrl" label="品牌Log" align="center" style="width: 80px;">
 
         <template v-slot="{row}">
-          <img :src="row.logoUrl" style="height:120px;width:150px" :alt="row.tmName">
+          <img :src="row.logoUrl" style="height:70px;width:150px" :alt="row.tmName">
         </template>
       </el-table-column>
 
