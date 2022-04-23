@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" round @click="xianshi=true">添加品牌</el-button>
+    <el-button type="primary" round @click="addpinpai">添加品牌</el-button>
 
     <el-table :data="trademarkList" border style="width: 100%;  margin: 10px 0">
       <el-table-column label="序号" type="index" width="80" align="center" />
@@ -19,17 +19,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页器------------------- -->
-    <el-pagination
-      align="center"
-      :current-page="currentPage"
-      :pager-count="5"
-      :page-sizes="[5, 10, 20, 50]"
-      :page-size="limit"
-      layout="total, prev, pager, next, sizes, jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    <el-pagination align="center" :current-page="currentPage" :pager-count="5" :page-sizes="[5, 10, 20, 50]" :page-size="limit" layout="total, prev, pager, next, sizes, jumper" :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     <!-- 添加品牌 -->
     <el-dialog title="添加品牌" :visible.sync="xianshi" width="40%">
       <el-form>
@@ -37,11 +27,7 @@
           <el-input autocomplete="off" />
         </el-form-item>
         <el-form-item label="品牌LOGO" :label-width="formLabelWidth">
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-          >
+          <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -50,10 +36,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="xianshi = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="xianshi = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="xianshi = false">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -127,7 +110,6 @@ export default {
         ],
         logoUrl: [{ required: true, message: '请选择一张品牌图片', trigger: 'change' }]
       }
-
     }
   },
   async mounted() {
@@ -161,10 +143,31 @@ export default {
     mounted() {
       this.reqGetTrademarkList()
     },
+    beforeAvatarUpload(file) {
+      const imgArr = ['image/jpeg', 'image/jpg', 'image/png']
+      const isJPG = imgArr.includes(file.type)
+      const isLt3M = file.size / 1024 / 1024 < 3
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG、PNG、JPEG 格式!')
+      }
+      if (!isLt3M) {
+        this.$message.error('上传头像图片大小不能超过 3MB!')
+      }
+      return isJPG && isLt3M
+    },
+    handleAvatarSuccess(res, file) {
+      console.log(res, file)
+      this.imageUrl = URL.createObjectURL(file.raw)
+      this.tmForm.logoUrl = res.data // 将上传图片成功后的图片链接地址存到这里面
+
+      this.$refs.tmForm.clearValidate(['logoUrl'])
+    },
     addpinpai() {
-
+      this.xianshi = true
+      this.tmForm.tmName = ''
+      this.imageUrl = ''
+      this.dialogFormVisible = true
     }
-
   }
 }
 </script>
