@@ -24,8 +24,6 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
- 
-
 
   publicPath: '/',
   outputDir: 'dist',
@@ -34,7 +32,7 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
+    // open: true,
     overlay: {
       warnings: false,
       errors: true
@@ -43,9 +41,9 @@ module.exports = {
     proxy: {
       '/dev-api': {
         target: 'http://39.98.123.211',
-        pathRewrite:{'^/dev-api':''}
+        pathRewrite: { '^/dev-api': '' }
       }
-    },
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

@@ -55,15 +55,14 @@ export const constantRoutes = [
     }]
   },
 
-  
   {
-    path: 'external-link',
+    // path: 'external-link',
     component: Layout,
     path: '/product',
-    component: Layout,
+    // component: Layout,
     name: 'Product',
-    meta: { title: '商品管理',icon:'el-icon-shopping-bag-2' },
-    
+    meta: { title: '商品管理', icon: 'el-icon-shopping-bag-2' },
+
     children: [
       {
         path: 'https://www.google.com/',
@@ -92,8 +91,8 @@ export const constantRoutes = [
         name: 'Sku',
         component: () => import('@/views/product/sku'),
         meta: { title: 'Sku管理' }
-      },
-      
+      }
+
     ]
   },
 
