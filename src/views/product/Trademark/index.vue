@@ -144,10 +144,11 @@ export default {
     //   this.reqGetTrademarkList()
     // },
     beforeAvatarUpload(file) {
-      const imgArr = ['image/jpeg', 'image/jpg', 'image/png']
+      const imgArr = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'video/mp4', 'image/webp']
       const isJPG = imgArr.includes(file.type)
-      const isLt3M = file.size / 1024 / 1024 < 3
+      const isLt3M = file.size / 1024 / 1024 < 300
       if (!isJPG) {
+        console.log(file.type)
         this.$message.error('上传头像图片只能是 JPG、PNG、JPEG 格式!')
       }
       if (!isLt3M) {
