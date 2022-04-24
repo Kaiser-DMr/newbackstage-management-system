@@ -66,7 +66,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'https://www.google.com/',
-        meta: { title: 'Goole Link', icon: 'link' }
+        meta: { title: '有问题点这里', icon: 'el-icon-thumb' }
       },
       {
         path: 'trademark',
