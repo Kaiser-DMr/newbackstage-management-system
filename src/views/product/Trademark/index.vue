@@ -12,10 +12,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作">
-        <el-button type="primary" icon="el-icon-edit" circle />
+      <el-table-column v-slot="{row}" label="操作">
+        <el-button type="primary" icon="el-icon-edit" circle @click="editOneTrademark(row.id)" />
         <!-- <el-button type="primary" icon="el-icon-delete-solid">删除啊</el-button> -->
-        <el-button type="danger" icon="el-icon-delete" circle />
+        <el-button type="danger" icon="el-icon-delete" circle @click="delOneTrademark(row.id)" />
       </el-table-column>
     </el-table>
     <!-- 分页器------------------- -->
@@ -198,6 +198,7 @@ export default {
     },
     // 3. 删除
     delOneTrademark(id) {
+      console.log('删除了')
       this.$confirm('您真的要删除此条数据吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
