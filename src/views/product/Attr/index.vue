@@ -2,12 +2,18 @@
 
   <el-card>
     <CategorySelector />
+    <AttrList />
   </el-card>
 </template>
 
 <script>
+import AttrList from './componets/AttrList.vue'
+
 export default {
-  name: 'Attr'
+  name: 'Attr',
+  components: {
+    AttrList
+  }
 }
 </script>
 
