@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" icon="el-icon-plus">添加属性</el-button>
+    <el-button type="primary" icon="el-icon-plus" @click="$emit('setIsShowAttrList',false)">添加属性</el-button>
     <!-- <el-table :data="attrList" border> -->
     <el-table v-loading="loading" :data="attrList" border>
       <el-table-column type="index" label="序号" align="center" width="80" />
