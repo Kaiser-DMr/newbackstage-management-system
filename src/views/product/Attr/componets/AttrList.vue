@@ -1,18 +1,25 @@
 <template>
   <div>
     <el-button type="primary" icon="el-icon-plus">添加属性</el-button>
-    <el-table :data="attrList" border>
+    <!-- <el-table :data="attrList" border> -->
+    <el-table v-loading="loading" :data="attrList" border>
       <el-table-column type="index" label="序号" align="center" width="80" />
-      <el-table-column prop="name" label="属性名称" width="180" />
-      <el-table-column prop="address" label="属性值列表" />
+      <el-table-column prop="attrName" align="center" label="属性名称" width="180" />
+      <el-table-column label="属性值列表">
+        <template v-slot="{row}">
+          <el-tag v-for="attrValue in row.attrValueList" :key="attrValue.id" style="margin-right:10px">{{ attrValue.valueName }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
-        <template v-slot="{ row }">
+        <template>
           <el-button type="warning" size="mini" icon="el-icon-edit" />
           <el-button type="danger" size="mini" icon="el-icon-delete" />
         </template>
       </el-table-column>
     </el-table>
+
   </div>
+
 </template>
 
 <script>
@@ -22,6 +29,7 @@ export default {
   name: 'AttrList',
   data() {
     return {
+      loading: true,
       attrList: []
     }
   },
