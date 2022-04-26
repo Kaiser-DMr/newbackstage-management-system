@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name:'sku'
+  name: 'Sku'
 }
 </script>
 

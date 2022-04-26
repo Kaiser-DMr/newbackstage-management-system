@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name:'spu'
+  name: 'Spu'
 }
 </script>
 

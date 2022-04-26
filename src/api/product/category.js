@@ -23,3 +23,4 @@ export function reqGetCategory3List(category2Id) {
     method: 'get'
   })
 }
+
