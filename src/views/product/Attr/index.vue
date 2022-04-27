@@ -23,9 +23,9 @@ export default {
     }
   },
   methods: {
-    setIsShowAttrList() {
+    setIsShowAttrList(a) {
       console.log('添加属性')
-      this.issShowAttrList = false
+      this.issShowAttrList = a
       console.log(this.issShowAttrList)
     }
   }
