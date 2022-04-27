@@ -32,12 +32,27 @@
           <el-table-column label="操作">
 
             <template v-slot="{}">
-              <el-button type="warning" size="mini" icon="el-icon-edit" />
-              <el-button
-                type="danger"
-                size="mini"
-                icon="el-icon-delete"
-              />
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="编辑属性"
+                placement="top-start"
+              >
+                <el-button type="warning" size="mini" icon="el-icon-edit" @click="edit-value-(row) " />
+              </el-tooltip>
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除属性"
+                placement="top-start"
+              >
+                <el-button
+                  type="danger"
+                  size="mini"
+                  icon="el-icon-delete"
+                  @click="edit-value-(row) "
+                />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -132,6 +147,10 @@ export default {
 
     isDeleteCurrentInput(row, index) {
       if (!row.valueName) return this.attr.attrValueList.splice(index, 1)
+    },
+    editValue(row) {
+      this.$emit('setAttr', row)
+      this.$emit('setIsShowAttrList', false)
     }
   }
 }

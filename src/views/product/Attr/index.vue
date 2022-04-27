@@ -1,15 +1,16 @@
 <template>
 
   <el-card>
-    <CategorySelector />
-    <AttrList v-if="issShowAttrList" @setIsShowAttrList="setIsShowAttrList" />
-    <SaveAttr v-else @setIsShowAttrList="setIsShowAttrList" />
+    <CategorySelector :disabled="issShowAttrList" />
+    <AttrList v-if="issShowAttrList" @setIsShowAttrList="setIsShowAttrList" @setAttr="attrValue=$event" />
+    <SaveAttr v-else :attr-value="attrValue" @setIsShowAttrList="setIsShowAttrList" />
   </el-card>
 </template>
 
 <script>
 import AttrList from './componets/AttrList.vue'
 import SaveAttr from './componets/SaveAttr.vue'
+
 export default {
   name: 'Attr',
   components: {
@@ -18,8 +19,8 @@ export default {
   },
   data() {
     return {
-      issShowAttrList: true
-      // attrValue: {}
+      issShowAttrList: true,
+      attrValue: ''
     }
   },
   methods: {

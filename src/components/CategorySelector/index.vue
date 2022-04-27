@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true" class="demo-form-inline">
+  <el-form :inline="true" class="demo-form-inline" :disabled="!disabled">
     <el-form-item label="一级分类">
       <el-select :value="category1Id" placeholder="请选择一级分类" @change="getCategory2List">
         <el-option v-for="c1 in category1List" :key="c1.id" :label="c1.name" :value="c1.id" />
@@ -23,6 +23,12 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'CategorySelector',
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     ...mapState('category', [
       'category1Id',
