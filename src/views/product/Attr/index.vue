@@ -2,8 +2,8 @@
 
   <el-card>
     <CategorySelector />
-    <AttrList v-if="issShowAttrList" @setIsShowAttrList="isShowAttrList=$event" @setAttr="getAttrValue" />
-    <SaveAttr v-else :attr-value="attrValue" @setIsShowAttrList="isShowAttrList=$event" />
+    <AttrList v-if="issShowAttrList" @setIsShowAttrList="setIsShowAttrList" />
+    <SaveAttr v-else @setIsShowAttrList="setIsShowAttrList" />
   </el-card>
 </template>
 
@@ -18,19 +18,18 @@ export default {
   },
   data() {
     return {
-      issShowAttrList: true,
-      attrValue: {}
+      issShowAttrList: true
+      // attrValue: {}
     }
   },
   methods: {
-    setIsShowAttrList(flag) {
-      this.isShowAttrList = flag
-    },
-    getAttrValue(obj) {
-      this.attrValue = obj
+    setIsShowAttrList() {
+      console.log('添加属性')
+      this.issShowAttrList = false
+      console.log(this.issShowAttrList)
     }
-
   }
+
 }
 </script>
 

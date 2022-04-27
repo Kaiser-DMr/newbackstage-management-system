@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-button type="primary" icon="el-icon-plus" @click="$emit('setIsShowAttrList',false)">添加属性</el-button>
-    <!-- <el-table :data="attrList" border> -->
+    <el-button type="primary" icon="el-icon-plus" :disabled="!category3Id" @click="$emit('setIsShowAttrList',false)">添加属性AN</el-button>
+
     <el-table v-loading="loading" :data="attrList" border>
       <el-table-column type="index" label="序号" align="center" width="80" />
       <el-table-column prop="attrName" align="center" label="属性名称" width="180" />
