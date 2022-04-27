@@ -4,6 +4,7 @@
       <el-form-item label="属性名" prop="attrName">
         <el-input v-model="attr.attrName" style="width: 220px" />
       </el-form-item>
+
       <el-form-item>
         <el-button
           type="primary"
@@ -12,35 +13,44 @@
           @click="addAttrValue"
         >添加属性值</el-button>
       </el-form-item>
+      <el-form-item prop="attrValueList">
+        <el-table :data="attr.attrValueList" border style="margin-bottom:20px">
+          <el-table-column type="index" label="序号" align="center" width="80" />
+          <el-table-column prop="attrName" label="属性名称">
+
+            <template v-slot="{ row,$index }">
+              <el-input
+                :ref="$index"
+                v-model="row.valueName"
+                placeholder="请输入属性名称"
+                size="mini"
+                @blur="isDeleteCurrentInput(row,$index)"
+              />
+            </template>
+          </el-table-column>
+
+          <el-table-column label="操作">
+
+            <template v-slot="{}">
+              <el-button type="warning" size="mini" icon="el-icon-edit" />
+              <el-button
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+              />
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-form-item>
     </el-form>
-    <el-table :data="attr.attrValueList" border>
-      <el-table-column type="index" label="序号" align="center" width="80" />
-      <el-table-column prop="attrName" label="属性名称">
-        <template v-slot="{ row,$index }">
-          <el-input
-            :ref="$index"
-            placeholder="请输入属性名称"
-            size="mini"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template v-slot="{}">
-          <el-button type="warning" size="mini" icon="el-icon-edit" />
-          <el-button
-            type="danger"
-            size="mini"
-            icon="el-icon-delete"
-          />
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-button type="primary">确定</el-button>
+    <el-button type="primary" @click="submitForm">确定</el-button>
     <el-button type="default" @click="$emit('setIsShowAttrList',true)">取消</el-button>
   </el-card>
 </template>
 
 <script>
+import { reqSaveAttrInfo } from '@/api/product/attr'
+import { mapState } from 'vuex'
 export default {
   name: 'SaveAttr',
   data() {
@@ -55,7 +65,7 @@ export default {
       callback()
     }
     return {
-      // attrValueList: [],
+
       attr: {
         tmName: '',
         attrValueList: []
@@ -69,6 +79,11 @@ export default {
 
     }
   },
+
+  computed: {
+    ...mapState('category', ['category3Id'])
+  },
+
   methods: {
     addAttrValue() {
       this.attr.attrValueList.push({
@@ -77,6 +92,46 @@ export default {
       this.$nextTick(() => {
         this.$refs[this.attr.attrValueList.length - 1].focus()
       })
+    },
+    submitForm() {
+      this.$refs.form.validate(async valid => {
+        if (valid) {
+          const { attrName, attrValueList } = this.attr
+          const { category3Id } = this
+          const result = await reqSaveAttrInfo({
+            attrName,
+            attrValueList,
+            categoryId: category3Id,
+            categoryLevel: 3
+          })
+          if (result.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '添加属性成功'
+            })
+            console.log('添加成功')
+            this.$emit('setIsShowAttrList', true)
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+
+    // submitForm() {
+    //   this.$refs.attrForm.validate(valid => {
+    //     if (valid) {
+    //       alert('submit!')
+    //     } else {
+    //       console.log('error submit!!')
+    //       return false
+    //     }
+    //   })
+    // },
+
+    isDeleteCurrentInput(row, index) {
+      if (!row.valueName) return this.attr.attrValueList.splice(index, 1)
     }
   }
 }
