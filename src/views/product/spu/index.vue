@@ -1,13 +1,20 @@
 <template>
-  <div>spu </div>
+  <div>
+    <CategorySelector />
+    <SpuList />
+  </div>
 </template>
 
 <script>
+import SpuList from './components/SpuList.vue'
 export default {
-  name: 'Spu'
+  name: 'Spu',
+  components: {
+    SpuList
+  }
 }
 </script>
 
-<style lang='scss' scoped>
+<style>
 
 </style>

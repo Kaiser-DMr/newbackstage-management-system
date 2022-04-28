@@ -13,3 +13,12 @@ export function reqSaveAttrInfo(data) {
     data
   })
 }
+
+export function reqSaveOrUpdateAttrInfo(data) {
+  return request({
+    url: `/admin/product/saveAttrInfo`,
+    method: 'post',
+    data
+  })
+}
+

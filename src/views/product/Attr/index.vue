@@ -3,7 +3,7 @@
   <el-card>
     <CategorySelector :disabled="issShowAttrList" />
     <AttrList v-if="issShowAttrList" @setIsShowAttrList="setIsShowAttrList" @setAttr="attrValue=$event" />
-    <SaveAttr v-else :attr-value="attrValue" @setIsShowAttrList="setIsShowAttrList" />
+    <SaveAttr v-else :attr-v="attrValue" @setIsShowAttrList="setIsShowAttrList" />
   </el-card>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     setIsShowAttrList(a) {
       console.log('添加属性')
       this.issShowAttrList = a
-      console.log(this.issShowAttrList)
+      console.log(this.issShowAttrList, '值')
     }
   }
 

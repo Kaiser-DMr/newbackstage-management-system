@@ -29,7 +29,7 @@ export default {
   name: 'AttrList',
   data() {
     return {
-      loading: true,
+      loading: false,
       attrList: []
     }
   },

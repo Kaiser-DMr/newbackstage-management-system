@@ -46,6 +46,9 @@ export default {
   methods: {
     ...mapActions('category', ['getCategory1List', 'getCategory2List', 'getCategory3List']),
     ...mapMutations('category', ['SET_CATEGORY3ID', 'RESET'])
+  },
+  beforeDestroy() {
+    this.RESET()
   }
 }
 
