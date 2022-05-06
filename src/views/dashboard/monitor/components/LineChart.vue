@@ -13,7 +13,7 @@ export default {
         left: -10,
         right: -10,
         top: 0,
-        bootom: 0,
+        bottom: 0,
       },
       xAxis: {
         data: [
@@ -47,8 +47,8 @@ export default {
           type: "linear",
           x: 0,
           y: 0,
-          x2: 0,
-          y2: 1,
+          x2: 1,
+          y2: 0,
           colorStops: [
             {
               offset: 0,
