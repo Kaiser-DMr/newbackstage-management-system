@@ -1,10 +1,17 @@
 <template>
-  <div>sku </div>
+  <div>
+    <SaveSku><SaveSku />
+    </savesku></div>
+
 </template>
 
 <script>
+import SaveSku from './SaveSku'
 export default {
-  name: 'Sku'
+  name: 'Sku',
+  components: {
+    SaveSku
+  }
 }
 </script>
 

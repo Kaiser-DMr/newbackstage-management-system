@@ -1,30 +1,32 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <!-- <div class="dashboard-text"></div> -->
+    <Montior></Montior>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import Montior from "./monitor/index.vue";
 export default {
-  name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
-  }
-}
+  name: "Dashboard",
+  components: {
+    Montior,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
+* {
+  margin: 0;
+  padding: 0;
 }
+// .dashboard {
+//   &-container {
+//     margin: 30px;
+//   }
+//   &-text {
+//     font-size: 30px;
+//     line-height: 46px;
+//   }
+// }
 </style>
