@@ -80,7 +80,15 @@
     .el-tabs__item {
       font-size:20px;
     }
+    // margin-bottom: 5px;
   }
   .el-date-editor--daterange.el-input__inner{
     width: 230px;
+  }
+
+  .search {
+    margin-top: 10px;
+    .el-card__body {
+      padding: 0;
+    }
   }

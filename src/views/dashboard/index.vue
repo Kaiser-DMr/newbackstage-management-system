@@ -3,17 +3,20 @@
     <!-- <div class="dashboard-text"></div> -->
     <Montior></Montior>
     <Sales> </Sales>
+    <Seare></Seare>
   </div>
 </template>
 
 <script>
 import Montior from "./monitor/index.vue";
 import Sales from "./sales/index.vue";
+import Seare from "./Search/index.vue";
 export default {
   name: "Dashboard",
   components: {
     Montior,
     Sales,
+    Seare,
   },
 };
 </script>
