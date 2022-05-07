@@ -69,3 +69,18 @@
   height: 178px;
   display: block;
 }
+
+.sales-card {
+  .el-card__body {
+      padding: 0;
+    }
+    .el-tabs__header {
+      margin: 0;
+    }
+    .el-tabs__item {
+      font-size:20px;
+    }
+  }
+  .el-date-editor--daterange.el-input__inner{
+    width: 230px;
+  }

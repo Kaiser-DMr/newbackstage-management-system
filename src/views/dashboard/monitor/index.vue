@@ -31,6 +31,9 @@
 
     <el-col :xs="24" :sm="12" :lg="6">
       <Card title="支付笔数" value="128460">
+        <template>
+          <BarChart></BarChart>
+        </template>
         <template #footer>
           <span>转化率 65%</span>
         </template>
@@ -39,6 +42,9 @@
 
     <el-col :xs="24" :sm="12" :lg="6">
       <Card title="运营活动效果" value="78%">
+        <template>
+          <Progresschart />
+        </template>
         <template #footer>
           <span
             >周同比12%
@@ -55,13 +61,15 @@
 <script>
 import Card from "./components/card.vue";
 import LineChart from "./components/LineChart.vue";
-
-// import Card from "./components/card.vue";
+import BarChart from "./components/Barchat.vue";
+import Progresschart from "./components/ProgressChart.vue";
 export default {
   name: "Montior",
   components: {
     Card,
     LineChart,
+    BarChart,
+    Progresschart,
   },
 };
 </script>

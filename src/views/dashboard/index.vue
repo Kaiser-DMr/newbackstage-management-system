@@ -2,15 +2,18 @@
   <div class="dashboard-container">
     <!-- <div class="dashboard-text"></div> -->
     <Montior></Montior>
+    <Sales> </Sales>
   </div>
 </template>
 
 <script>
 import Montior from "./monitor/index.vue";
+import Sales from "./sales/index.vue";
 export default {
   name: "Dashboard",
   components: {
     Montior,
+    Sales,
   },
 };
 </script>
